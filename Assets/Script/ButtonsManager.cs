@@ -8,46 +8,75 @@ public class ButtonsManager : MonoBehaviour
     private Vector3 originalPosition = new Vector3(0.61f, 147.3f, 25.4f);
     public void Zoom()
     {
-        float zoomVal = 0;
-        float targetScale = isZoomOut ? 1.0f : zoomVal;
-        imageToScale.transform.DOScale(targetScale, 0.25f);
-        isZoomOut = !isZoomOut;
+          float zoomVal = 0;
+          float targetScale = isZoomOut ? 1.0f : zoomVal;
+          imageToScale.transform.DOScale(targetScale, 0.25f);
+          isZoomOut = !isZoomOut;
     }
 
     public void Fade()
    {
-        float fadeValue = 1f;
-        float targetFade = isFadeOut ? 0f :fadeValue;
-        imageToScale.DOFade(targetFade, 1f);
-        isFadeOut = !isFadeOut;
+          float fadeValue = 1f;
+          float targetFade = isFadeOut ? 0f :fadeValue;
+          imageToScale.DOFade(targetFade, 1f);
+          isFadeOut = !isFadeOut;
    }
 
    public void Flip()
    {
-        float flipValue = 180f;
-        float targetFlip = isFlipOut ? 0f : flipValue;
-        imageToScale.transform.DORotate(new Vector3(0, targetFlip, 0), 0.25f);
-        float targetAlpha = isFlipOut ? 1f : 0f;
-        imageToScale.DOFade(targetAlpha, 0.25f);
-        isFlipOut = !isFlipOut;
+          float flipValue = 180f;
+          float targetFlip = isFlipOut ? 0f : flipValue;
+          imageToScale.transform.DORotate(new Vector3(0, targetFlip, 0), 0.25f);
+          float targetAlpha = isFlipOut ? 1f : 0f;
+          imageToScale.DOFade(targetAlpha, 0.25f);
+          isFlipOut = !isFlipOut;
    }
 
-   public void Fly()
+   public void Fly() //consult sir about this im dying
    {
-        float moveDistance = 1000f; 
-        float targetX = isFlyOut ? 0f : moveDistance;
-        imageToScale.rectTransform.DOMoveX(targetX, 0.25f);
-        isFlyOut = !isFlyOut;
+          float moveDistance = 1000f; 
+          float targetX = isFlyOut ? 0f : moveDistance;
+          imageToScale.rectTransform.DOMoveX(targetX, 0.25f);
+          isFlyOut = !isFlyOut;
    }
 
-   public void Drop()
+   public void Flash()
    {
-        
+          Sequence mySequence = DOTween.Sequence();
+          mySequence.Append(imageToScale.DOFade(0f, 0.25f));
+          mySequence.Append(imageToScale.DOFade(1f, 0.25f));
+          mySequence.Append(imageToScale.DOFade(0f, 0.25f));
+          mySequence.Append(imageToScale.DOFade(1f, 0.25f));
    }
 
-   public void Slide()
-   {
+   public void Bounce()
+    {
+        // Scale up the image slightly and then back to its original scale
+        float bounceScale = 1.5f; // Adjust this value as needed
+        float bounceDuration = 0.2f; // Adjust the duration of each bounce
+        float originalScale = 1.0f;
 
-   }
+        // Apply the first bounce animation
+        imageToScale.transform.DOScale(bounceScale, bounceDuration)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                // Scale the image back to its original size
+                imageToScale.transform.DOScale(originalScale, bounceDuration)
+                    .SetEase(Ease.InQuad)
+                    .OnComplete(() =>
+                    {
+                        // Apply the second bounce animation
+                        imageToScale.transform.DOScale(bounceScale, bounceDuration)
+                            .SetEase(Ease.OutQuad)
+                            .OnComplete(() =>
+                            {
+                                // Scale the image back to its original size
+                                imageToScale.transform.DOScale(originalScale, bounceDuration)
+                                    .SetEase(Ease.InQuad);
+                            });
+                    });
+            });
+    }
 
 }
