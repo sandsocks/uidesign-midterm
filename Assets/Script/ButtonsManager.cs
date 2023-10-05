@@ -51,27 +51,22 @@ public class ButtonsManager : MonoBehaviour
 
    public void Bounce()
     {
-        // Scale up the image slightly and then back to its original scale
-        float bounceScale = 1.5f; // Adjust this value as needed
-        float bounceDuration = 0.2f; // Adjust the duration of each bounce
+        float bounceScale = 1.5f; 
+        float bounceDuration = 0.2f; 
         float originalScale = 1.0f;
 
-        // Apply the first bounce animation
         imageToScale.transform.DOScale(bounceScale, bounceDuration)
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-                // Scale the image back to its original size
                 imageToScale.transform.DOScale(originalScale, bounceDuration)
                     .SetEase(Ease.InQuad)
                     .OnComplete(() =>
                     {
-                        // Apply the second bounce animation
                         imageToScale.transform.DOScale(bounceScale, bounceDuration)
                             .SetEase(Ease.OutQuad)
                             .OnComplete(() =>
                             {
-                                // Scale the image back to its original size
                                 imageToScale.transform.DOScale(originalScale, bounceDuration)
                                     .SetEase(Ease.InQuad);
                             });
