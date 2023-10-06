@@ -28,19 +28,19 @@ public class ButtonsManager : MonoBehaviour
           float targetFlip = isFlipOut ? 0f : flipValue;
           imageToScale.transform.DORotate(new Vector3(0, targetFlip, 0), 0.25f);
           float targetAlpha = isFlipOut ? 1f : 0f;
-          imageToScale.DOFade(targetAlpha, 0.25f);
+          imageToScale.DOFade(targetAlpha, 0.25f); 
           isFlipOut = !isFlipOut;
    }
 
-   public void Fly() //consult sir about this im dying
-   {
-          float moveDistance = 1000f; 
-          float targetX = isFlyOut ? 0f : moveDistance;
-          imageToScale.rectTransform.DOMoveX(targetX, 0.25f);
-          isFlyOut = !isFlyOut;
-   }
+    public void Fly() //consult sir about this im dying
+    {
+        float moveDistance = 600f;
+        float targetX = isFlyOut ? 1f : moveDistance;
+        imageToScale.rectTransform.DOMoveX(targetX, 0.25f);
+        isFlyOut = !isFlyOut;
+    }
 
-   public void Flash()
+    public void Flash()
    {
           Sequence mySequence = DOTween.Sequence();
           mySequence.Append(imageToScale.DOFade(0f, 0.25f));
